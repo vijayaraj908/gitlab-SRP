@@ -1,9 +1,11 @@
 pipeline {
     agent any
+    tools {
+        jdk 'JDK21' // This must match the name you gave in Jenkins Tools
+    }
     stages {
         stage('Build') {
             steps {
-                // Ensure the workspace is clean and run Maven
                 sh 'mvn clean package'
             }
         }
