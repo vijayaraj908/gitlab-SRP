@@ -10,18 +10,15 @@ public class Student {
     private Long id;
     
     // Updated to match your index.html fields
-    private String fullName;
-    private String post;
+    private String name;
     private int age;
     private String email;
     private String phone;
     private String course;
 
     // Getters and Setters
-    public String getFullName() { return fullName; }
-    public void setFullName(String fullName) { this.fullName = fullName; }
-    public String getPost() { return post; }
-    public void setPost(String post) { this.post = post; }
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
     public String getEmail() { return email; }
     public void setEmail(String email) { this.email = email; }
     public String getPhone() { return phone; }
