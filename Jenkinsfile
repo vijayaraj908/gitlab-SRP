@@ -26,7 +26,7 @@ pipeline {
                         echo 'SQL Server container is already running.'
                     }
 
-                    // 2. Deployment of the Spring Boot application
+                    // 2. Improved Deployment of the Spring Boot application
                     sh '''
                     # Stop any existing process to prevent port conflicts
                     pkill -f demo-0.0.1-SNAPSHOT.jar || true
@@ -34,9 +34,10 @@ pipeline {
                     # Ensure the process lives on after Jenkins finishes
                     export BUILD_ID=dontKillMe
                     
-                    # Use setsid to fully detach the process from the Jenkins agent
+                    # Use setsid to fully detach from the Jenkins agent and 
+                    # redirect input to /dev/null to prevent auto-shutdown
                     setsid java -jar target/demo-0.0.1-SNAPSHOT.jar \
-                    --server.port=8081 > app.log 2>&1 &
+                    --server.port=8081 > app.log 2>&1 < /dev/null &
                     
                     # Wait for the application to initialize
                     echo "Waiting for application to start..."
