@@ -22,31 +22,15 @@ pipeline {
                         docker run -e "ACCEPT_EULA=Y" -e "MSSQL_SA_PASSWORD=Vijaysql@16" \
                         -p 1433:1433 --name sql_server_container -d mcr.microsoft.com/mssql/server:2022-latest
                         '''
-                    } else {
-                        echo 'SQL Server container is already running.'
                     }
 
-                    // 2. Improved Deployment of the Spring Boot application
-                    sh '''
-                    # Stop any existing process to prevent port conflicts
-                    pkill -f demo-0.0.1-SNAPSHOT.jar || true
+                    // 2. Restart the systemd service
+                    // Note: Ensure the 'jenkins' user has sudo privileges for systemctl
+                    sh 'sudo systemctl restart srp-app'
                     
-                    # Ensure the process lives on after Jenkins finishes
-                    export BUILD_ID=dontKillMe
-                    
-                    # Use setsid to fully detach from the Jenkins agent and 
-                    # redirect input to /dev/null to prevent auto-shutdown
-                    setsid java -jar target/demo-0.0.1-SNAPSHOT.jar \
-                    --server.port=8081 > app.log 2>&1 < /dev/null &
-                    
-                    # Wait for the application to initialize
-                    echo "Waiting for application to start..."
+                    echo 'Waiting for service to stabilize...'
                     sleep 10
                     
-                    # Output the end of the log to verify successful startup
-                    echo "Checking application status in app.log..."
-                    tail -n 20 app.log
-                    '''
                     echo 'Deployment complete.'
                 }
             }
