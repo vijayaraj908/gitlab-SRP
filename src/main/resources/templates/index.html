@@ -9,13 +9,12 @@
     <h1>Student Registration</h1>
     
     <form th:action="@{/register}" th:object="${student}" method="post">
-        <input type="text" th:field="*{fullName}" placeholder="Full Name" required />
-        <input type="text" th:field="*{post}" placeholder="Post" />
-        <input type="email" th:field="*{email}" placeholder="Email" />
-        <input type="text" th:field="*{phone}" placeholder="Phone" />
-        <input type="number" th:field="*{age}" placeholder="Age" />
-        <input type="text" th:field="*{course}" placeholder="Course" />
-        <button type="submit">Register</button>
+    	<input type="text" th:field="*{name}" placeholder="Full Name" required />
+    	<input type="email" th:field="*{email}" placeholder="Email" />
+    	<input type="text" th:field="*{phone}" placeholder="Phone" />
+    	<input type="number" th:field="*{age}" placeholder="Age" />
+    	<input type="text" th:field="*{course}" placeholder="Course" />
+    	<button type="submit">Register</button>
     </form>
 
     <script th:src="@{/script.js}"></script>
