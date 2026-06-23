@@ -1,23 +1,28 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <link rel="stylesheet" th:href="@{/style.css}">
+    <meta charset="UTF-8">
+    <title>Admin Dashboard</title>
+    <style>
+        body { font-family: sans-serif; background-color: #f4f7f6; padding: 20px; }
+        .header { margin-bottom: 20px; }
+        .admin-link { text-decoration: none; background-color: #4a5568; color: white; padding: 10px 20px; border-radius: 6px; }
+        .table-container { background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); max-width: 1000px; margin: 0 auto; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th { background-color: #f8fafc; color: #4a5568; padding: 15px; border-bottom: 2px solid #e2e8f0; text-align: left; }
+        td { padding: 15px; border-bottom: 1px solid #e2e8f0; color: #2d3748; }
+        tr:hover { background-color: #f7fafc; }
+    </style>
 </head>
 <body>
     <div class="header">
         <a href="/" class="admin-link">← Back to Registration</a>
     </div>
-
     <div class="table-container">
         <h2>Registered Students</h2>
         <table>
             <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Phone</th>
-                    <th>Course</th>
-                </tr>
+                <tr><th>Name</th><th>Email</th><th>Phone</th><th>Course</th></tr>
             </thead>
             <tbody>
                 <tr th:each="student : ${students}">
