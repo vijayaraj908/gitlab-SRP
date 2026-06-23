@@ -6,16 +6,28 @@
     <link rel="stylesheet" th:href="@{/style.css}">
 </head>
 <body>
-    <h1>Student Registration</h1>
-    
-    <form th:action="@{/register}" th:object="${student}" method="post">
-    	<input type="text" th:field="*{name}" placeholder="Full Name" required />
-    	<input type="email" th:field="*{email}" placeholder="Email" />
-    	<input type="text" th:field="*{phone}" placeholder="Phone" />
-    	<input type="number" th:field="*{age}" placeholder="Age" />
-    	<input type="text" th:field="*{course}" placeholder="Course" />
-    	<button type="submit">Register</button>
-    </form>
+
+    <a href="/admin/login" class="admin-link">Admin Login</a>
+
+    <div class="container">
+        <h1>Student Registration</h1>
+        
+        <form th:action="@{/register}" th:object="${student}" method="post">
+            <input type="text" th:field="*{name}" placeholder="Full Name" required />
+            <input type="email" th:field="*{email}" placeholder="Email" required />
+            <input type="text" th:field="*{phone}" placeholder="Phone" required />
+            <input type="number" th:field="*{age}" placeholder="Age" required />
+            
+            <select th:field="*{course}" required>
+                <option value="" disabled selected>Select your course</option>
+                <option value="Computer Science & Engineering">Computer Science & Engineering</option>
+                <option value="Electronics & Communication Engineering">Electronics & Communication Engineering</option>
+                <option value="Electrical & Electronics Engineering">Electrical & Electronics Engineering</option>
+            </select>
+            
+            <button type="submit">Register</button>
+        </form>
+    </div>
 
     <script th:src="@{/script.js}"></script>
 </body>
