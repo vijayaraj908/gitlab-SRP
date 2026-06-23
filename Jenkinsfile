@@ -32,14 +32,10 @@ pipeline {
                     sleep 10
                     
                     echo 'Deployment complete.'
-                }
-            }
-        }
-        stage('Deploy') {
-            steps {
-                    // Stop the existing app (if running) and start the new one
+
                     sh 'sudo pkill -f demo-0.0.1-SNAPSHOT.jar || true'
                     sh 'nohup java -jar target/demo-0.0.1-SNAPSHOT.jar --server.port=8081 > app.log 2>&1 &'
+                }
             }
         }
     }
