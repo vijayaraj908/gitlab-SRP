@@ -22,4 +22,11 @@ public class RegistrationController {
         studentRepository.save(student);
         return "success";
     }
+    
+    @GetMapping("/admin/students")
+    public String listStudents(Model model) {
+    	List<Student> students = studentRepository.findAll(); // Assuming you have a JpaRepository
+    	model.addAttribute("students", students);
+    	return "admin-dashboard";
+    }
 }
