@@ -1,17 +1,10 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Student Registration</title>
-    <link rel="stylesheet" th:href="@{/style.css}">
-</head>
 <body>
-
-    <a href="/admin/login" class="admin-link">Admin Login</a>
+    <div class="header">
+        <a href="/admin/login" class="admin-link">Admin Login</a>
+    </div>
 
     <div class="container">
         <h1>Student Registration</h1>
-        
         <form th:action="@{/register}" th:object="${student}" method="post">
             <input type="text" th:field="*{name}" placeholder="Full Name" required />
             <input type="email" th:field="*{email}" placeholder="Email" required />
@@ -23,12 +16,11 @@
                 <option value="Computer Science & Engineering">Computer Science & Engineering</option>
                 <option value="Electronics & Communication Engineering">Electronics & Communication Engineering</option>
                 <option value="Electrical & Electronics Engineering">Electrical & Electronics Engineering</option>
+                <option value="Civil Engineering">Civil Engineering</option>
+                <option value="Mechanical Engineering">Mechanical Engineering</option>
             </select>
             
             <button type="submit">Register</button>
         </form>
     </div>
-
-    <script th:src="@{/script.js}"></script>
 </body>
-</html>

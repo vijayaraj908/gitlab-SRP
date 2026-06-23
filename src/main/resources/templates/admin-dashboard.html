@@ -1,18 +1,21 @@
-<!DOCTYPE html>
-<html>
-<head><link rel="stylesheet" href="/style.css"></head>
 <body>
+    <div class="header">
+        <a href="/" class="admin-link">← Back to Registration</a>
+    </div>
     <div class="table-container">
         <h2>Registered Students</h2>
         <table>
-            <tr><th>Name</th><th>Email</th><th>Phone</th><th>Course</th></tr>
-            <tr th:each="student : ${students}">
-                <td th:text="${student.name}"></td>
-                <td th:text="${student.email}"></td>
-                <td th:text="${student.phone}"></td>
-                <td th:text="${student.course}"></td>
-            </tr>
+            <thead>
+                <tr><th>Name</th><th>Email</th><th>Phone</th><th>Course</th></tr>
+            </thead>
+            <tbody>
+                <tr th:each="student : ${students}">
+                    <td th:text="${student.name}"></td>
+                    <td th:text="${student.email}"></td>
+                    <td th:text="${student.phone}"></td>
+                    <td th:text="${student.course}"></td>
+                </tr>
+            </tbody>
         </table>
     </div>
 </body>
-</html>
