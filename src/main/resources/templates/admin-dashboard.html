@@ -1,12 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" th:href="@{/style.css}">
+</head>
 <body>
     <div class="header">
         <a href="/" class="admin-link">← Back to Registration</a>
     </div>
+
     <div class="table-container">
         <h2>Registered Students</h2>
         <table>
             <thead>
-                <tr><th>Name</th><th>Email</th><th>Phone</th><th>Course</th></tr>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Course</th>
+                </tr>
             </thead>
             <tbody>
                 <tr th:each="student : ${students}">
@@ -19,3 +30,4 @@
         </table>
     </div>
 </body>
+</html>
