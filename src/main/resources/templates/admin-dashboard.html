@@ -4,10 +4,13 @@
     <meta charset="UTF-8">
     <title>Admin Dashboard</title>
     <style>
-        /* Keep your existing body/table styles, add these: */
         .modal { display: none; position: fixed; z-index: 1; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.4); }
         .modal-content { background-color: #fefefe; margin: 10% auto; padding: 20px; border: 1px solid #888; width: 400px; border-radius: 8px; }
-        tr { cursor: pointer; } /* Indicates clickable rows */
+        tr { cursor: pointer; }
+        .header { margin-bottom: 20px; }
+        .table-container { background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); max-width: 1000px; margin: 0 auto; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 15px; border-bottom: 1px solid #e2e8f0; text-align: left; }
     </style>
 </head>
 <body>
@@ -42,6 +45,7 @@
             <input type="checkbox" value="Civil Engineering"> Civil Engineering<br/>
             <input type="checkbox" value="Mechanical Engineering"> Mechanical Engineering<br/>
             <button onclick="applyFilter()">Apply</button>
+            <button onclick="document.getElementById('filterModal').style.display='none'">Cancel</button>
         </div>
     </div>
 
@@ -55,14 +59,37 @@
 
     <script>
         function applyFilter() {
-            // 1. Get checked values
-            // 2. Fetch /admin/students/filter?courses=...
-            // 3. Clear #tableBody and append new rows
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+            const courses = Array.from(checkboxes).map(cb => cb.value);
+
+            fetch('/admin/students/filter?courses=' + encodeURIComponent(courses.join(',')))
+                .then(response => response.json())
+                .then(students => {
+                    const tbody = document.getElementById('tableBody');
+                    tbody.innerHTML = '';
+                    students.forEach(student => {
+                        tbody.innerHTML += `<tr onclick="showDetails(${student.id})">
+                            <td>${student.name}</td>
+                            <td>${student.course}</td>
+                        </tr>`;
+                    });
+                    document.getElementById('filterModal').style.display = 'none';
+                });
         }
 
         function showDetails(id) {
-            // 1. Fetch /api/students/{id}
-            // 2. Populate #detailsContent and show #detailsModal
+            fetch('/api/students/' + id)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('detailsContent').innerHTML = `
+                        <p><strong>Name:</strong> ${data.name}</p>
+                        <p><strong>Age:</strong> ${data.age}</p>
+                        <p><strong>Email:</strong> ${data.email}</p>
+                        <p><strong>Phone:</strong> ${data.phone}</p>
+                        <p><strong>Course:</strong> ${data.course}</p>
+                    `;
+                    document.getElementById('detailsModal').style.display = 'block';
+                });
         }
     </script>
 </body>
