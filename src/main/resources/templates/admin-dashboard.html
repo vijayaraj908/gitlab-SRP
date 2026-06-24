@@ -23,11 +23,13 @@
                 <tr><th>Name</th><th>Course</th></tr>
             </thead>
             <tbody id="tableBody">
-                <tr th:each="student : ${students}" th:onclick="'showDetails(' + ${student.id} + ')'">
-                    <td th:text="${student.name}"></td>
-                    <td th:text="${student.course}"></td>
-                </tr>
-            </tbody>
+                <tr th:each="student : ${students}" 
+                 th:attr="onclick='showDetails(' + ${student.id} + ')'"
+                 style="cursor: pointer;">
+                 <td th:text="${student.name}">Name</td>
+        <td th:text="${student.course}">Course</td>
+    </tr>
+</tbody>
         </table>
     </div>
 
