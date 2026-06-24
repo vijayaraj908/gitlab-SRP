@@ -8,7 +8,10 @@
 <body>
     <div class="header">
         <a href="/" class="admin-link">← Back to Registration</a>
-        <button class="admin-link filter-btn" onclick="document.getElementById('filterModal').style.display='block'">Filter</button>
+        <div class="header-actions">
+            <button id="removeFilterBtn" class="admin-link remove-btn" style="display:none;" onclick="removeFilter()">Remove Filter</button>
+            <button class="admin-link filter-btn" onclick="document.getElementById('filterModal').style.display='block'">Filter</button>
+        </div>
     </div>
 
     <div class="table-container">
@@ -54,23 +57,41 @@
     </div>
 
     <script>
-        // Ensure your functions are in the global scope
         function applyFilter() {
             const checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+            if (checkboxes.length === 0) return; // Optional: don't filter if nothing selected
+
             const courses = Array.from(checkboxes).map(cb => cb.value);
             fetch('/admin/students/filter?courses=' + encodeURIComponent(courses.join(',')))
                 .then(response => response.json())
                 .then(students => {
-                    const tbody = document.getElementById('tableBody');
-                    tbody.innerHTML = '';
-                    students.forEach(student => {
-                        tbody.innerHTML += `<tr onclick="showDetails(${student.id})" style="cursor: pointer;">
-                            <td>${student.name}</td>
-                            <td>${student.course}</td>
-                        </tr>`;
-                    });
+                    updateTable(students);
+                    document.getElementById('removeFilterBtn').style.display = 'inline-block';
                     document.getElementById('filterModal').style.display = 'none';
                 });
+        }
+
+        function removeFilter() {
+            // Uncheck all boxes
+            document.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = false);
+            // Fetch all students (assuming you have an endpoint for this or just reload)
+            fetch('/admin/students/all') 
+                .then(response => response.json())
+                .then(students => {
+                    updateTable(students);
+                    document.getElementById('removeFilterBtn').style.display = 'none';
+                });
+        }
+
+        function updateTable(students) {
+            const tbody = document.getElementById('tableBody');
+            tbody.innerHTML = '';
+            students.forEach(student => {
+                tbody.innerHTML += `<tr onclick="showDetails(${student.id})" style="cursor: pointer;">
+                    <td>${student.name}</td>
+                    <td>${student.course}</td>
+                </tr>`;
+            });
         }
 
         function showDetails(id) {
