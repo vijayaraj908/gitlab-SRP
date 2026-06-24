@@ -1,25 +1,22 @@
 * { box-sizing: border-box; }
-body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f7f6; padding: 20px; }
+body { font-family: 'Segoe UI', sans-serif; background-color: #f4f7f6; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
 
-.container {
+.login-container {
     background: white;
     padding: 2.5rem;
     border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     width: 100%;
-    max-width: 450px;
-    margin: 50px auto;
+    max-width: 400px;
+    text-align: center;
 }
 
-h1 { text-align: center; color: #2d3748; margin-bottom: 1.5rem; }
-
-input, select {
+input {
     width: 100%;
     padding: 12px;
     margin-bottom: 15px;
     border: 1px solid #cbd5e0;
     border-radius: 6px;
-    font-size: 16px;
 }
 
 button {
@@ -29,7 +26,5 @@ button {
     color: white;
     border: none;
     border-radius: 6px;
-    font-size: 16px;
     cursor: pointer;
 }
-button:hover { background-color: #0056b3; }
