@@ -50,7 +50,7 @@ pipeline {
         failure
         {
             mail to: 'vijayaraj.innovate@gmail.com',
-                 subject: "Build Failed! : $(CurrentBuild.fullDisplayName}",
+                 subject: "Build Failed! : ${CurrentBuild.fullDisplayName}",
                  body: "The build has been failed. Please check the logs."
         }
     }
