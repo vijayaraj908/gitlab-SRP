@@ -26,22 +26,24 @@
                 <tr><th>Name</th><th>Course</th></tr>
             </thead>
             <tbody id="tableBody">
-                <tr th:each="student : ${students}" th:onclick="'showDetails(' + ${student.id} + ')'">
-                    <td th:text="${student.name}"></td>
-                    <td th:text="${student.course}"></td>
-                </tr>
-            </tbody>
+    <tr th:if="${students != null}" th:each="student : ${students}" 
+        th:attr="onclick='showDetails(' + ${student.id} + ')'"
+        style="cursor: pointer;">
+        <td th:text="${student.name != null ? student.name : 'N/A'}">Name</td>
+        <td th:text="${student.course != null ? student.course : 'N/A'}">Course</td>
+    </tr>
+</tbody>
         </table>
     </div>
 
-    <div id="filterModal" class="modal">
+   <div id="filterModal" class="modal">
         <div class="modal-content">
             <h3>Select Courses</h3>
-            <input type="checkbox" value="Computer Science &amp; Engineering"> Computer Science &amp; Engineering<br>
-            <input type="checkbox" value="Electronics &amp; Communication Engineering"> Electronics &amp; Communication Engineering<br>
-            <input type="checkbox" value="Electrical &amp; Electronics Engineering"> Electrical &amp; Electronics Engineering<br>
-            <input type="checkbox" value="Civil Engineering"> Civil Engineering<br>
-            <input type="checkbox" value="Mechanical Engineering"> Mechanical Engineering<br>
+            <input type="checkbox" value="Computer Science and Engineering"> Computer Science and Engineering<br/>
+            <input type="checkbox" value="Electronics and Communication Engineering"> Electronics and Communication Engineering<br/>
+            <input type="checkbox" value="Electrical and Electronics Engineering"> Electrical and Electronics Engineering<br/>
+            <input type="checkbox" value="Civil Engineering"> Civil Engineering<br/>
+            <input type="checkbox" value="Mechanical Engineering"> Mechanical Engineering<br/>
             <button onclick="applyFilter()">Apply</button>
             <button onclick="document.getElementById('filterModal').style.display='none'">Cancel</button>
         </div>
