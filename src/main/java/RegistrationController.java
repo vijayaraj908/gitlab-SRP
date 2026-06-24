@@ -30,4 +30,19 @@ public class RegistrationController {
     	model.addAttribute("students", students);
     	return "admin-dashboard";
     }
+    
+    @GetMapping("/admin/students/filter")
+    @ResponseBody
+    public List<Student> filterStudents(@RequestParam(value = "courses", required = false) List<String> 	courses) {
+        if (courses == null || courses.isEmpty()) {
+            return studentRepository.findAll();
+        }
+        return studentRepository.findByCourseIn(courses);
+    }
+    
+    @GetMapping("/api/students/{id}")
+    @ResponseBody
+    public Student getStudentById(@PathVariable Long id) {
+        return studentRepository.findById(id).orElse(null);
+    }
 }
