@@ -39,19 +39,16 @@ pipeline {
             }
         }
     }
-    post
-    {
-        success
-        {
+    post {
+        success {
             mail to: 'vijayaraj.innovate@gmail.com',
-                 subject: "Build success : ${CurrentBuild.fullDisplayName}",
+                 subject: "Build success: ${currentBuild.fullDisplayName}",
                  body: "The build was successful and the SRP application is Live now."
         }
-        failure
-        {
+        failure {
             mail to: 'vijayaraj.innovate@gmail.com',
-                 subject: "Build Failed! : ${CurrentBuild.fullDisplayName}",
-                 body: "The build has been failed. Please check the logs."
+                 subject: "Build Failed!: ${currentBuild.fullDisplayName}",
+                 body: "The build has failed. Please check the logs."
         }
     }
 }
