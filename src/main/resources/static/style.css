@@ -1,0 +1,81 @@
+/* Reset and Global Styles */
+* { box-sizing: border-box; }
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f7f6;
+    margin: 0;
+    padding: 20px;
+}
+
+/* Header Area for Admin Link */
+.header {
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto 20px auto;
+    padding: 10px 0;
+}
+
+.admin-link {
+    display: inline-block;
+    text-decoration: none;
+    background-color: #4a5568;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 14px;
+    transition: background 0.3s;
+}
+
+.admin-link:hover { background-color: #2d3748; }
+
+/* Form Container */
+.container {
+    background: white;
+    padding: 2.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    width: 100%;
+    max-width: 450px;
+    margin: 0 auto;
+}
+
+h1, h2 { text-align: center; color: #2d3748; margin-bottom: 1.5rem; }
+
+input, select {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #cbd5e0;
+    border-radius: 6px;
+    font-size: 16px;
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+button:hover { background-color: #0056b3; }
+
+/* Dashboard Table */
+.table-container {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+th { background-color: #f8fafc; color: #4a5568; padding: 15px; border-bottom: 2px solid #e2e8f0; text-align: left; }
+td { padding: 15px; border-bottom: 1px solid #e2e8f0; color: #2d3748; }
+tr:hover { background-color: #f7fafc; }
