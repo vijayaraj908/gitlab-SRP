@@ -8,7 +8,7 @@
 <body>
     <div class="header">
         <a href="/" class="admin-link">← Back to Registration</a>
-        <button onclick="document.getElementById('filterModal').style.display='block'">Filter</button>
+        <button class="admin-link filter-btn" onclick="document.getElementById('filterModal').style.display='block'">Filter</button>
     </div>
 
     <div class="table-container">
@@ -18,26 +18,30 @@
                 <tr><th>Name</th><th>Course</th></tr>
             </thead>
             <tbody id="tableBody">
-    <tr th:if="${students != null}" th:each="student : ${students}" 
-        th:attr="onclick='showDetails(' + ${student.id} + ')'"
-        style="cursor: pointer;">
-        <td th:text="${student.name != null ? student.name : 'N/A'}">Name</td>
-        <td th:text="${student.course != null ? student.course : 'N/A'}">Course</td>
-    </tr>
-</tbody>
+                <tr th:if="${students != null}" th:each="student : ${students}" 
+                    th:attr="onclick='showDetails(' + ${student.id} + ')'"
+                    style="cursor: pointer;">
+                    <td th:text="${student.name != null ? student.name : 'N/A'}">Name</td>
+                    <td th:text="${student.course != null ? student.course : 'N/A'}">Course</td>
+                </tr>
+            </tbody>
         </table>
     </div>
 
-   <div id="filterModal" class="modal">
+    <div id="filterModal" class="modal">
         <div class="modal-content">
             <h3>Select Courses</h3>
-            <input type="checkbox" value="Computer Science and Engineering"> Computer Science and Engineering<br/>
-            <input type="checkbox" value="Electronics and Communication Engineering"> Electronics and Communication Engineering<br/>
-            <input type="checkbox" value="Electrical and Electronics Engineering"> Electrical and Electronics Engineering<br/>
-            <input type="checkbox" value="Civil Engineering"> Civil Engineering<br/>
-            <input type="checkbox" value="Mechanical Engineering"> Mechanical Engineering<br/>
-            <button onclick="applyFilter()">Apply</button>
-            <button onclick="document.getElementById('filterModal').style.display='none'">Cancel</button>
+            <div class="checkbox-group">
+                <label><input type="checkbox" value="Computer Science and Engineering"> Computer Science and Engineering</label>
+                <label><input type="checkbox" value="Electronics and Communication Engineering"> Electronics and Communication Engineering</label>
+                <label><input type="checkbox" value="Electrical and Electronics Engineering"> Electrical and Electronics Engineering</label>
+                <label><input type="checkbox" value="Civil Engineering"> Civil Engineering</label>
+                <label><input type="checkbox" value="Mechanical Engineering"> Mechanical Engineering</label>
+            </div>
+            <div class="modal-actions">
+                <button onclick="applyFilter()">Apply</button>
+                <button onclick="document.getElementById('filterModal').style.display='none'">Cancel</button>
+            </div>
         </div>
     </div>
 
@@ -50,39 +54,7 @@
     </div>
 
     <script>
-        function applyFilter() {
-            const checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
-            const courses = Array.from(checkboxes).map(cb => cb.value);
-
-            fetch('/admin/students/filter?courses=' + encodeURIComponent(courses.join(',')))
-                .then(response => response.json())
-                .then(students => {
-                    const tbody = document.getElementById('tableBody');
-                    tbody.innerHTML = '';
-                    students.forEach(student => {
-                        tbody.innerHTML += `<tr onclick="showDetails(${student.id})">
-                            <td>${student.name}</td>
-                            <td>${student.course}</td>
-                        </tr>`;
-                    });
-                    document.getElementById('filterModal').style.display = 'none';
-                });
-        }
-
-        function showDetails(id) {
-            fetch('/api/students/' + id)
-                .then(response => response.json())
-                .then(data => {
-                    document.getElementById('detailsContent').innerHTML = `
-                        <p><strong>Name:</strong> ${data.name}</p>
-                        <p><strong>Age:</strong> ${data.age}</p>
-                        <p><strong>Email:</strong> ${data.email}</p>
-                        <p><strong>Phone:</strong> ${data.phone}</p>
-                        <p><strong>Course:</strong> ${data.course}</p>
-                    `;
-                    document.getElementById('detailsModal').style.display = 'block';
-                });
-        }
+        // ... (Keep your existing applyFilter and showDetails JS here)
     </script>
 </body>
 </html>
