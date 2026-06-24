@@ -54,7 +54,39 @@
     </div>
 
     <script>
-        // ... (Keep your existing applyFilter and showDetails JS here)
+        // Ensure your functions are in the global scope
+        function applyFilter() {
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+            const courses = Array.from(checkboxes).map(cb => cb.value);
+            fetch('/admin/students/filter?courses=' + encodeURIComponent(courses.join(',')))
+                .then(response => response.json())
+                .then(students => {
+                    const tbody = document.getElementById('tableBody');
+                    tbody.innerHTML = '';
+                    students.forEach(student => {
+                        tbody.innerHTML += `<tr onclick="showDetails(${student.id})" style="cursor: pointer;">
+                            <td>${student.name}</td>
+                            <td>${student.course}</td>
+                        </tr>`;
+                    });
+                    document.getElementById('filterModal').style.display = 'none';
+                });
+        }
+
+        function showDetails(id) {
+            fetch('/api/students/' + id)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('detailsContent').innerHTML = `
+                        <p><strong>Name:</strong> ${data.name}</p>
+                        <p><strong>Age:</strong> ${data.age}</p>
+                        <p><strong>Email:</strong> ${data.email}</p>
+                        <p><strong>Phone:</strong> ${data.phone}</p>
+                        <p><strong>Course:</strong> ${data.course}</p>
+                    `;
+                    document.getElementById('detailsModal').style.display = 'block';
+                });
+        }
     </script>
 </body>
 </html>
