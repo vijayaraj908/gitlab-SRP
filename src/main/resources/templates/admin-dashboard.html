@@ -35,11 +35,11 @@
         <div class="modal-content">
             <h3>Filter by Course</h3>
             <div class="checkbox-group">
-                <label><input type="checkbox" value="Computer Science and Engineering"> Computer Science and Engineering</label>
-                <label><input type="checkbox" value="Electronics and Communication Engineering"> Electronics and Communication Engineering</label>
-                <label><input type="checkbox" value="Electrical and Electronics Engineering"> Electrical and Electronics Engineering</label>
-                <label><input type="checkbox" value="Civil Engineering"> Civil Engineering</label>
-                <label><input type="checkbox" value="Mechanical Engineering"> Mechanical Engineering</label>
+                <label><input type="radio" value="Computer Science and Engineering"> Computer Science and Engineering</label>
+                <label><input type="radio" value="Electronics and Communication Engineering"> Electronics and Communication Engineering</label>
+                <label><input type="radio" value="Electrical and Electronics Engineering"> Electrical and Electronics Engineering</label>
+                <label><input type="radio" value="Civil Engineering"> Civil Engineering</label>
+                <label><input type="radio" value="Mechanical Engineering"> Mechanical Engineering</label>
             </div>
             <div class="modal-actions">
                 <button onclick="applyFilter()">Apply</button>
@@ -58,18 +58,22 @@
 
     <script>
         function applyFilter() {
-            const checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
-            if (checkboxes.length === 0) return;
+    // Look for the currently checked radio button
+    const selectedRadio = document.querySelector('input[name="courseFilter"]:checked');
+    
+    if (!selectedRadio) return; // Exit if nothing is selected
 
-            const courses = Array.from(checkboxes).map(cb => cb.value);
-            fetch('/admin/students/filter?courses=' + encodeURIComponent(courses.join(',')))
-                .then(response => response.json())
-                .then(students => {
-                    updateTable(students);
-                    document.getElementById('removeFilterBtn').style.display = 'inline-block';
-                    document.getElementById('filterModal').style.display = 'none';
-                });
-        }
+    const course = selectedRadio.value;
+
+    // Fetch using the single value
+    fetch('/admin/students/filter?courses=' + encodeURIComponent(course))
+        .then(response => response.json())
+        .then(students => {
+            updateTable(students);
+            document.getElementById('removeFilterBtn').style.display = 'inline-block';
+            document.getElementById('filterModal').style.display = 'none';
+        });
+}
 
         function removeFilter() {
     // 1. Uncheck all checkboxes
