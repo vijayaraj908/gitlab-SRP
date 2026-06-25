@@ -9,8 +9,8 @@
     <div class="header">
         <a href="/" class="admin-link">← Back to Registration</a>
         <div class="header-actions">
-            <button id="removeFilterBtn" class="admin-link remove-btn" style="display:none;" onclick="removeFilter()">Remove Filter</button>
-            <button class="admin-link filter-btn" onclick="document.getElementById('filterModal').style.display='block'">Filter</button>
+            <button id="removeFilterBtn" class="remove-btn" style="display:none;" onclick="removeFilter()">Remove Filter</button>
+            <button class="filter-btn" onclick="document.getElementById('filterModal').style.display='block'">Filter</button>
         </div>
     </div>
 
@@ -33,7 +33,7 @@
 
     <div id="filterModal" class="modal">
         <div class="modal-content">
-            <h3>Select Courses</h3>
+            <h3>Filter by Course</h3>
             <div class="checkbox-group">
                 <label><input type="checkbox" value="Computer Science and Engineering"> Computer Science and Engineering</label>
                 <label><input type="checkbox" value="Electronics and Communication Engineering"> Electronics and Communication Engineering</label>
@@ -59,7 +59,7 @@
     <script>
         function applyFilter() {
             const checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
-            if (checkboxes.length === 0) return; // Optional: don't filter if nothing selected
+            if (checkboxes.length === 0) return;
 
             const courses = Array.from(checkboxes).map(cb => cb.value);
             fetch('/admin/students/filter?courses=' + encodeURIComponent(courses.join(',')))
@@ -103,9 +103,6 @@
                 .then(data => {
                     document.getElementById('detailsContent').innerHTML = `
                         <p><strong>Name:</strong> ${data.name}</p>
-                        <p><strong>Age:</strong> ${data.age}</p>
-                        <p><strong>Email:</strong> ${data.email}</p>
-                        <p><strong>Phone:</strong> ${data.phone}</p>
                         <p><strong>Course:</strong> ${data.course}</p>
                     `;
                     document.getElementById('detailsModal').style.display = 'block';

@@ -26,17 +26,27 @@ public class RegistrationController {
     
     @GetMapping("/admin/students")
     public String listStudents(Model model) {
-    	List<Student> students = studentRepository.findAll(); // Assuming you have a JpaRepository
-    	model.addAttribute("students", students);
-    	return "admin-dashboard";
+        List<Student> students = studentRepository.findAll();
+        model.addAttribute("students", students);
+        return "admin-dashboard";
     }
     
+    // Endpoint for "Remove Filter" - returns ALL students
+    @GetMapping("/admin/students/all")
+    @ResponseBody
+    public List<Student> getAllStudents() {
+        return studentRepository.findAll();
+    }
+    
+    // Endpoint for Filter functionality
     @GetMapping("/admin/students/filter")
     @ResponseBody
-    public List<Student> filterStudents(@RequestParam(value = "courses", required = false) List<String> 	courses) {
-        if (courses == null || courses.isEmpty()) {
+    public List<Student> filterStudents(@RequestParam(value = "courses", required = false) String coursesParam) {
+        if (coursesParam == null || coursesParam.isEmpty()) {
             return studentRepository.findAll();
         }
+        // Convert comma-separated string to List
+        List<String> courses = List.of(coursesParam.split(","));
         return studentRepository.findByCourseIn(courses);
     }
     
