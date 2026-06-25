@@ -98,16 +98,20 @@
         }
 
         function showDetails(id) {
-            fetch('/api/students/' + id)
-                .then(response => response.json())
-                .then(data => {
-                    document.getElementById('detailsContent').innerHTML = `
-                        <p><strong>Name:</strong> ${data.name}</p>
-                        <p><strong>Course:</strong> ${data.course}</p>
-                    `;
-                    document.getElementById('detailsModal').style.display = 'block';
-                });
-        }
+    fetch('/api/students/' + id)
+        .then(response => response.json())
+        .then(data => {
+            // Update this template to include all fields you want to show
+            document.getElementById('detailsContent').innerHTML = `
+                <p><strong>Name:</strong> ${data.name}</p>
+                <p><strong>Age:</strong> ${data.age}</p>
+                <p><strong>Email:</strong> ${data.email}</p>
+                <p><strong>Phone:</strong> ${data.phone}</p>
+                <p><strong>Course:</strong> ${data.course}</p>
+            `;
+            document.getElementById('detailsModal').style.display = 'block';
+        });
+}
     </script>
 </body>
 </html>
