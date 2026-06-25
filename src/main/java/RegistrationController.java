@@ -56,9 +56,4 @@ public class RegistrationController {
         return studentRepository.findById(id).orElse(null);
     }
 
-    @GetMapping("/admin/students/all")
-    @ResponseBody
-    public List<Student> getAllStudents() {
-       return studentRepository.findAll();
-  }
 }
