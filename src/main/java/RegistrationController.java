@@ -55,4 +55,10 @@ public class RegistrationController {
     public Student getStudentById(@PathVariable Long id) {
         return studentRepository.findById(id).orElse(null);
     }
+
+    @GetMapping("/admin/students/all")
+    @ResponseBody
+    public List<Student> getAllStudents() {
+       return studentRepository.findAll();
+  }
 }

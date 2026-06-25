@@ -72,14 +72,19 @@
         }
 
         function removeFilter() {
-            document.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = false);
-            fetch('/admin/students/all')
-                .then(response => response.json())
-                .then(students => {
-                    updateTable(students);
-                    document.getElementById('removeFilterBtn').style.display = 'none';
-                });
-        }
+    // 1. Uncheck all checkboxes
+    document.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = false);
+    
+    // 2. Fetch the 'all' endpoint (ensure this exists in your Controller)
+    fetch('/admin/students/all') 
+        .then(response => response.json())
+        .then(students => {
+            updateTable(students);
+            // 3. Hide the button after resetting
+            document.getElementById('removeFilterBtn').style.display = 'none';
+        })
+        .catch(err => console.error("Error fetching all students:", err));
+}
 
         function updateTable(students) {
             const tbody = document.getElementById('tableBody');
