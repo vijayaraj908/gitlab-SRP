@@ -35,11 +35,11 @@
         <div class="modal-content">
             <h3>Filter by Course</h3>
             <div class="checkbox-group">
-                <label><input type="radio" value="Computer Science and Engineering"> Computer Science and Engineering</label>
-                <label><input type="radio" value="Electronics and Communication Engineering"> Electronics and Communication Engineering</label>
-                <label><input type="radio" value="Electrical and Electronics Engineering"> Electrical and Electronics Engineering</label>
-                <label><input type="radio" value="Civil Engineering"> Civil Engineering</label>
-                <label><input type="radio" value="Mechanical Engineering"> Mechanical Engineering</label>
+                <label><input type="radio" name="courseFilter" value="Computer Science and Engineering"> Computer Science and Engineering</label>
+                <label><input type="radio" name="courseFilter" value="Electronics and Communication Engineering"> Electronics and Communication Engineering</label>
+                <label><input type="radio" name="courseFilter" value="Electrical and Electronics Engineering"> Electrical and Electronics Engineering</label>
+                <label><input type="radio" name="courseFilter" value="Civil Engineering"> Civil Engineering</label>
+                <label><input type="radio" name="courseFilter" value="Mechanical Engineering"> Mechanical Engineering</label>
             </div>
             <div class="modal-actions">
                 <button onclick="applyFilter()">Apply</button>
@@ -58,37 +58,33 @@
 
     <script>
         function applyFilter() {
-    // Look for the currently checked radio button
-    const selectedRadio = document.querySelector('input[name="courseFilter"]:checked');
-    
-    if (!selectedRadio) return; // Exit if nothing is selected
+            // Find the selected radio button
+            const selectedRadio = document.querySelector('input[name="courseFilter"]:checked');
+            if (!selectedRadio) return; 
 
-    const course = selectedRadio.value;
+            const course = selectedRadio.value;
 
-    // Fetch using the single value
-    fetch('/admin/students/filter?courses=' + encodeURIComponent(course))
-        .then(response => response.json())
-        .then(students => {
-            updateTable(students);
-            document.getElementById('removeFilterBtn').style.display = 'inline-block';
-            document.getElementById('filterModal').style.display = 'none';
-        });
-}
+            fetch('/admin/students/filter?courses=' + encodeURIComponent(course))
+                .then(response => response.json())
+                .then(students => {
+                    updateTable(students);
+                    document.getElementById('removeFilterBtn').style.display = 'inline-block';
+                    document.getElementById('filterModal').style.display = 'none';
+                });
+        }
 
         function removeFilter() {
-    // 1. Uncheck all checkboxes
-    document.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = false);
-    
-    // 2. Fetch the 'all' endpoint (ensure this exists in your Controller)
-    fetch('/admin/students/all') 
-        .then(response => response.json())
-        .then(students => {
-            updateTable(students);
-            // 3. Hide the button after resetting
-            document.getElementById('removeFilterBtn').style.display = 'none';
-        })
-        .catch(err => console.error("Error fetching all students:", err));
-}
+            // Uncheck all radio buttons using the name selector
+            document.querySelectorAll('input[name="courseFilter"]').forEach(rb => rb.checked = false);
+            
+            fetch('/admin/students/all') 
+                .then(response => response.json())
+                .then(students => {
+                    updateTable(students);
+                    document.getElementById('removeFilterBtn').style.display = 'none';
+                })
+                .catch(err => console.error("Error resetting filter:", err));
+        }
 
         function updateTable(students) {
             const tbody = document.getElementById('tableBody');
