@@ -55,4 +55,5 @@ public class RegistrationController {
     public Student getStudentById(@PathVariable Long id) {
         return studentRepository.findById(id).orElse(null);
     }
+
 }

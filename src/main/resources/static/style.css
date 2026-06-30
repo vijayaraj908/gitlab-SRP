@@ -1,4 +1,13 @@
+
 * { margin: 0; padding: 0; box-sizing: border-box; }
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 
 body {
     font-family: "Segoe UI", sans-serif;
@@ -12,6 +21,7 @@ body {
     flex-direction: column;
     padding: 20px;
 }
+
 
 /* Admin Login Button - Top Right */
 .nav-header {
@@ -49,6 +59,46 @@ input, select {
     width: 100%; padding: 14px; margin-bottom: 18px;
     border: 1px solid #d1d5db; border-radius: 10px;
     background: #f8fafc; font-size: 15px;
+
+/* Container */
+/* Reset and Global Styles */
+* { box-sizing: border-box; }
+
+body { 
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+    background-color: #f4f7f6; 
+    margin: 0;
+    padding: 20px; 
+}
+
+/* Header link container for Registration page */
+.header-link {
+    width: 100%;
+    max-width: 450px;
+    margin: 0 auto 20px auto;
+    text-align: right;
+}
+
+/* Button style for links (used in Admin Login and Back buttons) */
+.admin-link {
+    display: inline-block;
+    text-decoration: none;
+    background-color: #4a5568;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 14px;
+    transition: background 0.3s;
+}
+.admin-link:hover { background-color: #2d3748; }
+
+/* Registration Form Container */
+.container {
+    width: 100%;
+    max-width: 450px;
+    margin: 0 auto; /* Removed top margin 50px to account for header link */
+
 }
 
 button {

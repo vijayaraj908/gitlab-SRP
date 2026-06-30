@@ -35,11 +35,11 @@
         <div class="modal-content">
             <h3>Filter by Course</h3>
             <div class="checkbox-group">
-                <label><input type="checkbox" value="Computer Science and Engineering"> Computer Science and Engineering</label>
-                <label><input type="checkbox" value="Electronics and Communication Engineering"> Electronics and Communication Engineering</label>
-                <label><input type="checkbox" value="Electrical and Electronics Engineering"> Electrical and Electronics Engineering</label>
-                <label><input type="checkbox" value="Civil Engineering"> Civil Engineering</label>
-                <label><input type="checkbox" value="Mechanical Engineering"> Mechanical Engineering</label>
+                <label><input type="radio" name="courseFilter" value="Computer Science and Engineering"> Computer Science and Engineering</label>
+                <label><input type="radio" name="courseFilter" value="Electronics and Communication Engineering"> Electronics and Communication Engineering</label>
+                <label><input type="radio" name="courseFilter" value="Electrical and Electronics Engineering"> Electrical and Electronics Engineering</label>
+                <label><input type="radio" name="courseFilter" value="Civil Engineering"> Civil Engineering</label>
+                <label><input type="radio" name="courseFilter" value="Mechanical Engineering"> Mechanical Engineering</label>
             </div>
             <div class="modal-actions">
                 <button onclick="applyFilter()">Apply</button>
@@ -58,11 +58,13 @@
 
     <script>
         function applyFilter() {
-            const checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
-            if (checkboxes.length === 0) return;
+            // Find the selected radio button
+            const selectedRadio = document.querySelector('input[name="courseFilter"]:checked');
+            if (!selectedRadio) return; 
 
-            const courses = Array.from(checkboxes).map(cb => cb.value);
-            fetch('/admin/students/filter?courses=' + encodeURIComponent(courses.join(',')))
+            const course = selectedRadio.value;
+
+            fetch('/admin/students/filter?courses=' + encodeURIComponent(course))
                 .then(response => response.json())
                 .then(students => {
                     updateTable(students);
@@ -72,13 +74,16 @@
         }
 
         function removeFilter() {
-            document.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = false);
-            fetch('/admin/students/all')
+            // Uncheck all radio buttons using the name selector
+            document.querySelectorAll('input[name="courseFilter"]').forEach(rb => rb.checked = false);
+            
+            fetch('/admin/students/all') 
                 .then(response => response.json())
                 .then(students => {
                     updateTable(students);
                     document.getElementById('removeFilterBtn').style.display = 'none';
-                });
+                })
+                .catch(err => console.error("Error resetting filter:", err));
         }
 
         function updateTable(students) {
@@ -93,16 +98,20 @@
         }
 
         function showDetails(id) {
-            fetch('/api/students/' + id)
-                .then(response => response.json())
-                .then(data => {
-                    document.getElementById('detailsContent').innerHTML = `
-                        <p><strong>Name:</strong> ${data.name}</p>
-                        <p><strong>Course:</strong> ${data.course}</p>
-                    `;
-                    document.getElementById('detailsModal').style.display = 'block';
-                });
-        }
+    fetch('/api/students/' + id)
+        .then(response => response.json())
+        .then(data => {
+            // Update this template to include all fields you want to show
+            document.getElementById('detailsContent').innerHTML = `
+                <p><strong>Name:</strong> ${data.name}</p>
+                <p><strong>Age:</strong> ${data.age}</p>
+                <p><strong>Email:</strong> ${data.email}</p>
+                <p><strong>Phone:</strong> ${data.phone}</p>
+                <p><strong>Course:</strong> ${data.course}</p>
+            `;
+            document.getElementById('detailsModal').style.display = 'block';
+        });
+}
     </script>
 </body>
 </html>
